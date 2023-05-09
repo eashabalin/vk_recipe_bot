@@ -21,11 +21,18 @@ type UpdateResponse struct {
 }
 
 type Update struct {
-	GroupID int    `json:"group_id"`
-	Type    string `json:"message_new"`
-	EventID string `json:"event_id"`
-	Object  Object `json:"object"`
+	GroupID int        `json:"group_id"`
+	Type    UpdateType `json:"type"`
+	EventID string     `json:"event_id"`
+	Object  `json:"object"`
 }
+
+type UpdateType string
+
+const (
+	MessageNew   UpdateType = "message_new"
+	MessageReply UpdateType = "message_reply"
+)
 
 type Object struct {
 	Message Message `json:"message"`

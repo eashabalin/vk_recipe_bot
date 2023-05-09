@@ -7,10 +7,6 @@ import (
 	"vk_recipe_bot/vkbotapi"
 )
 
-const (
-	ApiVersion = "5.131"
-)
-
 func main() {
 	cfg, err := configs.GetConfig()
 	if err != nil {
@@ -29,6 +25,15 @@ func main() {
 	}
 
 	for update := range updates {
-		fmt.Println(update.Object.Message.Text)
+
+		if update.Type == vkbotapi.MessageNew {
+			message := vkbotapi.NewMessage(update.Message.FromID, update.Message.Text)
+
+			err = bot.Send(message)
+			if err != nil {
+				fmt.Println(err)
+			}
+		}
+
 	}
 }

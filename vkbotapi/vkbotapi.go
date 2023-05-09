@@ -117,6 +117,14 @@ func buildParams(in Params) url.Values {
 	return out
 }
 
+func (b *VKBotAPI) Send(c Chattable) error {
+	_, err := b.Request(c)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (b *VKBotAPI) Request(c Chattable) (*APIResponse, error) {
 	params, err := c.params()
 	if err != nil {
