@@ -44,3 +44,19 @@ func NewKeyboard(buttonRows ...[]Button) *Keyboard {
 func NewInlineKeyboard(buttonRows ...[]Button) *Keyboard {
 	return newKeyboard(true, buttonRows...)
 }
+
+func NewDeleteMessage(deleteForAll bool, groupID string, messageIDs ...int) *DeleteMessageConfig {
+	return &DeleteMessageConfig{
+		MessageIDs:   messageIDs,
+		DeleteForAll: deleteForAll,
+		GroupID:      groupID,
+	}
+}
+
+func NewEditMessage(userID int, messageID int, message string) *EditMessageConfig {
+	return &EditMessageConfig{
+		PeerID:    userID,
+		Message:   message,
+		MessageID: messageID,
+	}
+}

@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"fmt"
 	"vk_recipe_bot/pkg/repo"
 	"vk_recipe_bot/vkbotapi"
 )
@@ -68,5 +69,26 @@ func HandleEvent(b *vkbotapi.VKBotAPI, m *vkbotapi.MessageEventObject) error {
 	if err != nil {
 		return err
 	}
+
+	edit := vkbotapi.NewEditMessage(m.UserID, m.ConversationMessageID, "лалалал")
+
+	keyboard := vkbotapi.NewInlineKeyboard(
+		vkbotapi.NewKeyboardButtonRow(
+			vkbotapi.NewKeyboardButton("Завтрак")),
+		vkbotapi.NewKeyboardButtonRow(
+			vkbotapi.NewKeyboardButton("Обед")),
+		vkbotapi.NewKeyboardButtonRow(
+			vkbotapi.NewKeyboardButton("Полдник")),
+		vkbotapi.NewKeyboardButtonRow(
+			vkbotapi.NewKeyboardButton("Ужин")),
+	)
+
+	edit.Keyboard = keyboard
+
+	err = b.Send(edit)
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	return nil
 }

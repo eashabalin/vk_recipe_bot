@@ -2,6 +2,7 @@ package vkbotapi
 
 import (
 	"math/rand"
+	"strconv"
 )
 
 const (
@@ -89,4 +90,57 @@ func (c EventAnswerConfig) params() (Params, error) {
 	params.AddNonEmpty("v", APIVersion)
 
 	return params, nil
+}
+
+type DeleteMessageConfig struct {
+	MessageIDs   []int
+	DeleteForAll bool
+	GroupID      string
+}
+
+func (DeleteMessageConfig) method() string {
+	return "messages.delete"
+}
+
+func (c DeleteMessageConfig) params() (Params, error) {
+	params := make(Params)
+
+	messageIDsStr := ""
+
+	for i := 0; i < len(c.MessageIDs); i++ {
+		messageIDsStr += strconv.Itoa(c.MessageIDs[i])
+		if i < len(c.MessageIDs)-1 {
+			messageIDsStr += ","
+		}
+	}
+
+	params.AddNonEmpty("message_ids", messageIDsStr)
+	params.AddNonEmpty("group_id", c.GroupID)
+	params.AddBool("delete_for_all", c.DeleteForAll)
+	params.AddNonEmpty("v", APIVersion)
+
+	return params, nil
+}
+
+type EditMessageConfig struct {
+	PeerID    int
+	Message   string
+	MessageID int
+	Keyboard  *Keyboard
+}
+
+func (c *EditMessageConfig) method() string {
+	return "messages.edit"
+}
+
+func (c *EditMessageConfig) params() (Params, error) {
+	params := make(Params)
+
+	params.AddNonZero("peer_id", c.PeerID)
+	params.AddNonEmpty("message", c.Message)
+	params.AddNonZero("message_id", c.MessageID)
+	params.AddNonEmpty("v", APIVersion)
+	err := params.AddInterface("keyboard", c.Keyboard)
+
+	return params, err
 }

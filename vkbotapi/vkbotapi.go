@@ -13,7 +13,7 @@ import (
 
 type VKBotAPI struct {
 	token   string
-	groupID string
+	GroupID string
 	client  *http.Client
 	Debug   bool
 	Buffer  int
@@ -25,7 +25,7 @@ type VKBotAPI struct {
 func NewVKBotAPI(token, groupID string, debug bool) *VKBotAPI {
 	return &VKBotAPI{
 		token:       token,
-		groupID:     groupID,
+		GroupID:     groupID,
 		client:      &http.Client{},
 		apiEndpoint: APIEndpoint,
 		Debug:       debug,
@@ -34,7 +34,7 @@ func NewVKBotAPI(token, groupID string, debug bool) *VKBotAPI {
 }
 
 func (b *VKBotAPI) GetUpdatesChan(config UpdateConfig) (chan Update, error) {
-	longPollConfig := LongPollConfig{GroupID: b.groupID}
+	longPollConfig := LongPollConfig{GroupID: b.GroupID}
 
 	longPollResponse, err := b.GetLongPollServer(longPollConfig)
 	if err != nil {
@@ -181,7 +181,7 @@ func (b *VKBotAPI) RequestURL(url string, params Params) (*APIResponse, error) {
 		return nil, err
 	}
 
-	fmt.Println(string(rawData))
+	//fmt.Println(string(rawData))
 
 	errorResponse := ErrorResponse{}
 
