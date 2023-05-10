@@ -12,6 +12,7 @@ import (
 const (
 	mealsText  = "Здорово! Какой приём пищи тебя интересует: завтрак, обед или ужин?🤔"
 	dishesText = "Какое блюдо выберешь?😋"
+	startText  = "Чтобы начать, отправь сообщение \"Начать\""
 )
 
 func HandleMessage(b *vkbotapi.VKBotAPI, m *vkbotapi.Message) error {
@@ -28,6 +29,13 @@ func HandleMessage(b *vkbotapi.VKBotAPI, m *vkbotapi.Message) error {
 			return err
 		}
 		return nil
+	} else {
+		msg := vkbotapi.NewMessage(m.FromID, startText)
+
+		err := b.Send(msg)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
