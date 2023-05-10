@@ -50,3 +50,56 @@ func FindDish(name string) *models.Dish {
 	}
 	return nil
 }
+
+func getDishesFromBy(from, by int, source []models.Dish) []models.Dish {
+	dishes := make([]models.Dish, 0, by)
+
+	if from > len(source) {
+		return nil
+	}
+
+	for i := from - 1; i < from+by-1; i++ {
+		dishes = append(dishes, source[i])
+		if i+1 == len(source) {
+			break
+		}
+	}
+
+	return dishes
+}
+
+func GetBreakfastDishes(from, by int) []models.Dish {
+	menu, err := GetMenu()
+	if err != nil {
+		return nil
+	}
+
+	return getDishesFromBy(from, by, menu.Breakfast)
+}
+
+func GetLunchDishes(from, by int) []models.Dish {
+	menu, err := GetMenu()
+	if err != nil {
+		return nil
+	}
+
+	return getDishesFromBy(from, by, menu.Lunch)
+}
+
+func GetAfternoonSnackDishes(from, by int) []models.Dish {
+	menu, err := GetMenu()
+	if err != nil {
+		return nil
+	}
+
+	return getDishesFromBy(from, by, menu.AfternoonSnack)
+}
+
+func GetDinnerDishes(from, by int) []models.Dish {
+	menu, err := GetMenu()
+	if err != nil {
+		return nil
+	}
+
+	return getDishesFromBy(from, by, menu.Dinner)
+}

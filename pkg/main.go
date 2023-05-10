@@ -27,8 +27,6 @@ func main() {
 
 	for update := range updates {
 
-		fmt.Println(update)
-
 		if update.IsMessageNew() {
 			err = bot2.HandleMessage(bot, update.MessageNew())
 			if err != nil {

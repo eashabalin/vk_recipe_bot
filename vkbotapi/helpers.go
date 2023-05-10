@@ -60,3 +60,10 @@ func NewEditMessage(userID int, messageID int, message string) *EditMessageConfi
 		MessageID: messageID,
 	}
 }
+
+func NewEventAnswer(eventID string, userID int) *EventAnswerConfig {
+	return &EventAnswerConfig{
+		EventID: eventID,
+		UserID:  userID,
+	}
+}
