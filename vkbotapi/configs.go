@@ -1,6 +1,8 @@
 package vkbotapi
 
-import "math/rand"
+import (
+	"math/rand"
+)
 
 const (
 	APIEndpoint = "https://api.vk.com/method/"
@@ -48,8 +50,9 @@ func (c UpdateConfig) params() (Params, error) {
 }
 
 type SendMessageConfig struct {
-	UserID  int
-	Message string
+	UserID   int
+	Message  string
+	Keyboard Keyboard
 }
 
 func (SendMessageConfig) method() string {
@@ -63,6 +66,7 @@ func (c SendMessageConfig) params() (Params, error) {
 	params.AddNonZero("random_id", int(rand.Int31()))
 	params.AddNonEmpty("message", c.Message)
 	params.AddNonEmpty("v", APIVersion)
+	err := params.AddInterface("keyboard", c.Keyboard)
 
-	return params, nil
+	return params, err
 }

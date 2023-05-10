@@ -29,6 +29,19 @@ func main() {
 		if update.Type == vkbotapi.MessageNew {
 			message := vkbotapi.NewMessage(update.Message.FromID, update.Message.Text)
 
+			keyboard := vkbotapi.NewInlineKeyboard(
+				vkbotapi.NewKeyboardButtonRow(
+					vkbotapi.NewKeyboardButton("1"),
+					vkbotapi.NewKeyboardButton("2"),
+					vkbotapi.NewKeyboardButton("3"),
+				),
+				vkbotapi.NewKeyboardButtonRow(
+					vkbotapi.NewKeyboardButton("4"),
+					vkbotapi.NewKeyboardButton("5"),
+				),
+			)
+			message.Keyboard = keyboard
+
 			err = bot.Send(message)
 			if err != nil {
 				fmt.Println(err)

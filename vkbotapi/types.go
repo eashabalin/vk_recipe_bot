@@ -1,6 +1,8 @@
 package vkbotapi
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type APIResponse struct {
 	Result     json.RawMessage
@@ -39,9 +41,10 @@ type Object struct {
 }
 
 type Message struct {
-	FromID int    `json:"from_id"`
-	ID     int    `json:"id"`
-	Text   string `json:"text"`
+	FromID   int      `json:"from_id"`
+	ID       int      `json:"id"`
+	Text     string   `json:"text"`
+	Keyboard Keyboard `json:"keyboard"`
 }
 
 type Error struct {
