@@ -52,7 +52,7 @@ func (c UpdateConfig) params() (Params, error) {
 type SendMessageConfig struct {
 	UserID   int
 	Message  string
-	Keyboard Keyboard
+	Keyboard *Keyboard
 }
 
 func (SendMessageConfig) method() string {
@@ -69,4 +69,24 @@ func (c SendMessageConfig) params() (Params, error) {
 	err := params.AddInterface("keyboard", c.Keyboard)
 
 	return params, err
+}
+
+type EventAnswerConfig struct {
+	EventID string
+	UserID  int
+}
+
+func (EventAnswerConfig) method() string {
+	return "messages.sendMessageEventAnswer"
+}
+
+func (c EventAnswerConfig) params() (Params, error) {
+	params := make(Params)
+
+	params.AddNonEmpty("event_id", c.EventID)
+	params.AddNonZero("user_id", c.UserID)
+	params.AddNonZero("peer_id", c.UserID)
+	params.AddNonEmpty("v", APIVersion)
+
+	return params, nil
 }

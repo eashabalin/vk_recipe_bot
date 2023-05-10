@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	bot2 "vk_recipe_bot/pkg/bot"
 	configs "vk_recipe_bot/pkg/config"
 	"vk_recipe_bot/vkbotapi"
 )
@@ -26,23 +27,16 @@ func main() {
 
 	for update := range updates {
 
-		if update.Type == vkbotapi.MessageNew {
-			message := vkbotapi.NewMessage(update.Message.FromID, update.Message.Text)
+		fmt.Println(update)
 
-			keyboard := vkbotapi.NewInlineKeyboard(
-				vkbotapi.NewKeyboardButtonRow(
-					vkbotapi.NewKeyboardButton("1"),
-					vkbotapi.NewKeyboardButton("2"),
-					vkbotapi.NewKeyboardButton("3"),
-				),
-				vkbotapi.NewKeyboardButtonRow(
-					vkbotapi.NewKeyboardButton("4"),
-					vkbotapi.NewKeyboardButton("5"),
-				),
-			)
-			message.Keyboard = keyboard
-
-			err = bot.Send(message)
+		if update.IsMessageNew() {
+			err = bot2.HandleMessage(bot, update.MessageNew())
+			if err != nil {
+				fmt.Println(err)
+			}
+		}
+		if update.IsMessageEvent() {
+			err = bot2.HandleEvent(bot, update.MessageEvent())
 			if err != nil {
 				fmt.Println(err)
 			}

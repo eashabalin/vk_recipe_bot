@@ -100,6 +100,27 @@ func (b *VKBotAPI) GetUpdates(longPollServer string, config UpdateConfig) (*Upda
 		return nil, err
 	}
 
+	for i, update := range updateResponse.Updates {
+		switch update.Type {
+		case MessageNew:
+			objJson, err := json.Marshal(update.Object)
+			if err != nil {
+				return nil, err
+			}
+			var messageNewObject MessageNewObject
+			json.Unmarshal(objJson, &messageNewObject)
+			updateResponse.Updates[i].Object = messageNewObject
+		case MessageEvent:
+			objJson, err := json.Marshal(update.Object)
+			if err != nil {
+				return nil, err
+			}
+			var messageEventObject MessageEventObject
+			json.Unmarshal(objJson, &messageEventObject)
+			updateResponse.Updates[i].Object = messageEventObject
+		}
+	}
+
 	return &updateResponse, nil
 }
 
@@ -159,6 +180,8 @@ func (b *VKBotAPI) RequestURL(url string, params Params) (*APIResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	fmt.Println(string(rawData))
 
 	errorResponse := ErrorResponse{}
 
