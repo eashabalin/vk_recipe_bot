@@ -123,10 +123,10 @@ func (c DeleteMessageConfig) params() (Params, error) {
 }
 
 type EditMessageConfig struct {
-	PeerID    int
-	Message   string
-	MessageID int
-	Keyboard  *Keyboard
+	PeerID                int
+	Message               string
+	ConversationMessageID int
+	Keyboard              *Keyboard
 }
 
 func (c *EditMessageConfig) method() string {
@@ -138,7 +138,7 @@ func (c *EditMessageConfig) params() (Params, error) {
 
 	params.AddNonZero("peer_id", c.PeerID)
 	params.AddNonEmpty("message", c.Message)
-	params.AddNonZero("message_id", c.MessageID)
+	params.AddNonZero("conversation_message_id", c.ConversationMessageID)
 	params.AddNonEmpty("v", APIVersion)
 	err := params.AddInterface("keyboard", c.Keyboard)
 

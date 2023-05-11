@@ -53,11 +53,11 @@ func NewDeleteMessage(deleteForAll bool, groupID string, messageIDs ...int) *Del
 	}
 }
 
-func NewEditMessage(userID int, messageID int, message string) *EditMessageConfig {
+func NewEditMessage(userID int, conversationMessageID int, message string) *EditMessageConfig {
 	return &EditMessageConfig{
-		PeerID:    userID,
-		Message:   message,
-		MessageID: messageID,
+		PeerID:                userID,
+		Message:               message,
+		ConversationMessageID: conversationMessageID,
 	}
 }
 

@@ -17,7 +17,7 @@ const (
 
 func HandleMessage(b *vkbotapi.VKBotAPI, m *vkbotapi.Message) error {
 
-	if m.Text == "Начать" {
+	if strings.ToLower(m.Text) == "начать" {
 		msg := vkbotapi.NewMessage(m.FromID, mealsText)
 
 		keyboard := StartKeyboard()
